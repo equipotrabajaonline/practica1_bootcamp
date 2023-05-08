@@ -8,7 +8,7 @@ const app = express();
 
 // GET method route
 app.get('/', function (req, res) {
-    res.send('GET request to the homepage');
+    res.send('Estas en el método post_OK');
 });
   
 // POST method route
@@ -27,9 +27,9 @@ Your implementation here
 */
 
 // // Connect to mongodb server
-// const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 // /* Your url connection to mongodb container */
-// const url = ...;
+//const url = 'localhost:27017';
 
 // GET method route
 // Retrieve all documents in collection
@@ -49,5 +49,6 @@ If not found, do nothing. (204 No Content)
 If found, document deleted (200 OK) */
 // ...
 
+
 app.listen(port, hostname);
-console.log(`Running on port:`+port+`, hostname:`+hostname);
+console.log(`Running on http://${hostname}:${port}`);
