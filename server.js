@@ -11,8 +11,10 @@ const { promisify } = require('util');
 
 //BBDD 
 const MongoClient = require('mongodb').MongoClient;
-//const url = 'mongodb://mongodbjf:27019'; //probado tambien con este y no me conecta
-const url = 'mongodb://localhost:27019';
+/* const url = 'mongodb://mongodbjf:27019';  */
+
+//probado tambien con este y no me conecta
+const url = 'mongodb://localhost:27019'; 
 const dbName = 'users';
 const collectionName = 'datos';
 
@@ -40,52 +42,42 @@ app.get('/secret', function (req, res, next) {
 
 // // Connect to mongodb server
 //const MongoClient = require('mongodb').MongoClient;
-// /* Your url connection to mongodb container */
-//const url = 'localhost:27019';   
-//Para usar un puerto que no se haya usado con la versión local de mongodb
 
-//
+//  Your url connection to mongodb container 
+//Para usar un puerto que no se haya usado con la versión local de mongodb
+//const url = 'localhost:27019';   
+
+
 
 app.get('/all', async function (req, res) {
     try{ 
-        const client = await MongoClient.connect(url);
+        const client = await MongoClient.connect(url , { useNewUrlParser:true, useUnifiedTopology: true});
         const dbo = client.db(dbName);
         const query = {};
         const result = await dbo.collectionName(collectionName).find(query).toArray();
         if(result.length > 0){
             res.status(200).send(result);
-            console.log('Si es mayor que 0');
+            console.log('BBDD tiene datos');
         }else{
             res.status(200).send("No hay datos");
-            console.log('no es mayor que cero');
+            console.log('Nohay datos en BBDD');
         }
+        client.close();
     }
-     catch{
-        console.log('saltó a catch');
-        res.status(200).send("No conectó");
+     catch (err){
+        console.error(err);
+        res.status(500).send("No conectó");
 
     } 
+    // conexión correcta probada 
+   /*  MongoClient.connect(url, function(err,db){
+            console.log("conectado");
+            
+    }); */
     
 });
 
 
-// GET method route
-// Retrieve all documents in collection
-
-
-// GET method route
-// Query by a certain field(s)
-// ...
-
-/* PUT method. Modifying the message based on certain field(s). 
-If not found, create a new document in the database. (201 Created)
-If found, message, date and offset is modified (200 OK) */
-// ...
-
-/* DELETE method. Modifying the message based on certain field(s).
-If not found, do nothing. (204 No Content)
-If found, document deleted (200 OK) */
-// ...
 
 
 app.listen(port, hostname);
