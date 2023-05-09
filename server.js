@@ -9,8 +9,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const { promisify } = require('util');
 
-//BBDD
+//BBDD 
 const MongoClient = require('mongodb').MongoClient;
+//const url = 'mongodb://mongodbjf:27019'; //probado tambien con este y no me conecta
 const url = 'mongodb://localhost:27019';
 const dbName = 'users';
 const collectionName = 'datos';
@@ -36,14 +37,14 @@ app.get('/secret', function (req, res, next) {
     console.log('This is a console.log message.');
 });
 
-/*
-Your implementation here 
-*/
 
 // // Connect to mongodb server
 //const MongoClient = require('mongodb').MongoClient;
 // /* Your url connection to mongodb container */
-//const url = 'localhost:27019';
+//const url = 'localhost:27019';   
+//Para usar un puerto que no se haya usado con la versión local de mongodb
+
+//
 
 app.get('/all', async function (req, res) {
     try{ 
